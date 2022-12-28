@@ -12,7 +12,7 @@ class MovieLingkingImpl implements MovieLinking {
   Future<Either<String, MovieResponseModel>> getDiscover({int page = 1}) async {
     try {
       final result =
-          await _dio.get('/discover/movie', queryParameters: {'page': page});
+          await _dio.get('/movie/now_playing', queryParameters: {'page': page});
 
       if (result.statusCode == 200 && result.data != null) {
         final model = MovieResponseModel.fromJson(result.data);

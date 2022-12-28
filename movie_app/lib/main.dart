@@ -37,8 +37,9 @@ class MyApp extends StatelessWidget {
           create: (_) => MovieDiscoverProvider(movieLinking),
         ),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         home: DashboardPage(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

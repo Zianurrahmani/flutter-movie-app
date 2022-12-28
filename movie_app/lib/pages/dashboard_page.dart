@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/app_credentials.dart';
+import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/provider/movie_discover_provider.dart';
 import 'package:movie_app/widgets/drawer.dart';
+import 'package:movie_app/widgets/image.dart';
+import 'package:movie_app/widgets/items.dart';
 import 'package:provider/provider.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -10,10 +12,6 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieDiscoverProvider>().getDiscover(context);
-    });
-
     final mediaqueryHeight = MediaQuery.of(context).size.height;
     final myAppBar = AppBar(title: const Text("Home"));
     final bodyHeight = mediaqueryHeight -
@@ -24,21 +22,62 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
         drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
         body: CustomScrollView(
-          slivers: [SliverAppBar(title: Text("Home")), WidgetDiscoverMovie()],
+          slivers: [
+            const SliverAppBar(title: Text("Home")),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Now Playing",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                        onPressed: null,
+                        child: Text(
+                          "MORE",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                ),
+              ),
+            ),
+            const WidgetDiscoverMovie()
+          ],
         ));
   }
 }
 
-class WidgetDiscoverMovie extends SliverToBoxAdapter {
+class WidgetDiscoverMovie extends StatefulWidget {
+  const WidgetDiscoverMovie({super.key});
+
   @override
-  // TODO: implement child
-  Widget? get child => Consumer<MovieDiscoverProvider>(
+  State<WidgetDiscoverMovie> createState() => _WidgetDiscoverMovieState();
+}
+
+class _WidgetDiscoverMovieState extends State<WidgetDiscoverMovie> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MovieDiscoverProvider>().getDiscover(context);
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Consumer<MovieDiscoverProvider>(
         builder: (_, provider, __) {
           if (provider.isLoading) {
-            return Center(
-              child: Container(
-                child: Text("Loading"),
-              ),
+            return const SizedBox(
+              height: 200,
+              width: double.infinity,
+              child: Center(child: CircularProgressIndicator()),
             );
           }
 
@@ -47,22 +86,33 @@ class WidgetDiscoverMovie extends SliverToBoxAdapter {
                 itemCount: provider.movies.length,
                 itemBuilder: (_, index, __) {
                   final movie = provider.movies[index];
-                  return Image.network(
-                      '${AppCredentials.baseImageUrl}${movie.backdropPath}');
+                  return ItemMovie(movie);
                 },
                 options: CarouselOptions(
+                  height: 200,
                   viewportFraction: 0.8,
                   reverse: false,
                   autoPlay: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enlargeCenterPage: true,
+                  enlargeFactor: 0.2,
                   scrollDirection: Axis.horizontal,
                 ));
           }
 
-          return Center(
-            child: Container(child: Text("Internal Server Error")),
+          return Container(
+            height: 200,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[400]),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: const Center(
+              child: Text("Internal Server Error"),
+            ),
           );
         },
-      );
+      ),
+    );
+  }
 }
