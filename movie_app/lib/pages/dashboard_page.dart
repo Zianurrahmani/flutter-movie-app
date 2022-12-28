@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/app_credentials.dart';
 import 'package:movie_app/provider/movie_discover_provider.dart';
 import 'package:movie_app/widgets/drawer.dart';
 import 'package:provider/provider.dart';
@@ -20,32 +22,47 @@ class DashboardPage extends StatelessWidget {
     final bodyWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: myAppBar,
-      drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
-      body: Consumer<MovieDiscoverProvider>(
+        drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
+        body: CustomScrollView(
+          slivers: [SliverAppBar(title: Text("Home")), WidgetDiscoverMovie()],
+        ));
+  }
+}
+
+class WidgetDiscoverMovie extends SliverToBoxAdapter {
+  @override
+  // TODO: implement child
+  Widget? get child => Consumer<MovieDiscoverProvider>(
         builder: (_, provider, __) {
           if (provider.isLoading) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Container(
+                child: Text("Loading"),
+              ),
             );
           }
 
           if (provider.movies.isNotEmpty) {
-            return ListView.builder(itemBuilder: ((context, index) {
-              final movie = provider.movies[index];
-
-              return ListTile(
-                title: Text(movie.title),
-                subtitle: Text(movie.overview),
-              );
-            }));
+            return CarouselSlider.builder(
+                itemCount: provider.movies.length,
+                itemBuilder: (_, index, __) {
+                  final movie = provider.movies[index];
+                  return Image.network(
+                      '${AppCredentials.baseImageUrl}${movie.backdropPath}');
+                },
+                options: CarouselOptions(
+                  viewportFraction: 0.8,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                ));
           }
 
           return Center(
-            child: Text("Internal Server Error"),
+            child: Container(child: Text("Internal Server Error")),
           );
         },
-      ),
-    );
-  }
+      );
 }
