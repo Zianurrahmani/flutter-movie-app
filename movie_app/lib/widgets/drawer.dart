@@ -22,9 +22,13 @@ class DrawerContent extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        "https://thumbs.dreamstime.com/b/light-blue-abstract-background-square-shapes-bright-navy-dynamic-vector-diagonal-lines-cover-business-presentation-sale-207204578.jpg"))),
             width: bodyWidth,
             height: bodyHeight * 0.2,
-            color: Colors.blue,
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
