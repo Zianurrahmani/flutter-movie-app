@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:movie_app/models/movie_model.dart';
-import 'package:movie_app/provider/movie_discover_provider.dart';
+import 'package:movie_app/provider/movie_nowplaying_provider.dart';
 import 'package:movie_app/widgets/drawer.dart';
 import 'package:movie_app/widgets/image.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +45,9 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
               itemBuilder: (context, item, index) {
             return Container(
               decoration: BoxDecoration(
-                  color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+              ),
               height: bodyHeight * 0.2,
               width: double.infinity,
               child: Row(
@@ -71,10 +73,14 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
                               size: 16,
                             ),
                             Text('${item.voteAverage}'),
-                            Text(
-                              item.title,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              width: 180,
+                              child: Text(
+                                item.title,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ],
                         ),
@@ -108,7 +114,7 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
             );
           }),
           separatorBuilder: (context, index) => const SizedBox(
-            height: 10,
+            height: 15,
           ),
         ),
       ),

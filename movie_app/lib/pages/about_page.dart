@@ -15,7 +15,7 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: myAppBar,
       drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
-      body: Center(
+      body: const Center(
         child: Text("About"),
       ),
     );

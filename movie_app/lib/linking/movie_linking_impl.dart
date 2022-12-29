@@ -27,4 +27,44 @@ class MovieLingkingImpl implements MovieLinking {
       return const Left('Internal Server Error');
     }
   }
+
+  @override
+  Future<Either<String, MovieResponseModel>> getTopRated({int page = 1}) async {
+    try {
+      final result =
+          await _dio.get('/movie/top_rated', queryParameters: {'page': page});
+
+      if (result.statusCode == 200 && result.data != null) {
+        final model = MovieResponseModel.fromJson(result.data);
+        return Right(model);
+      }
+
+      return const Left('Error get dicover');
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return Left(e.response.toString());
+      }
+      return const Left('Internal Server Error');
+    }
+  }
+
+  @override
+  Future<Either<String, MovieResponseModel>> getUpcoming({int page = 1}) async {
+    try {
+      final result =
+          await _dio.get('/movie/upcoming', queryParameters: {'page': page});
+
+      if (result.statusCode == 200 && result.data != null) {
+        final model = MovieResponseModel.fromJson(result.data);
+        return Right(model);
+      }
+
+      return const Left('Error get dicover');
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return Left(e.response.toString());
+      }
+      return const Left('Internal Server Error');
+    }
+  }
 }

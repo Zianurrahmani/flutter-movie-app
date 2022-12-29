@@ -36,13 +36,18 @@ class DrawerContent extends StatelessWidget {
               children: [
                 Container(
                   decoration: const BoxDecoration(
-                      color: Colors.amber,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            "https://paneljam2.s3.amazonaws.com/uploads/avatar/content/199/content.png"),
+                      )
+                      // color: Colors.amber,
+                      ,
                       borderRadius: BorderRadius.all(Radius.circular(70))),
                   height: 70,
                   width: 70,
                 ),
                 const Text(
-                  "Zianurrahmani",
+                  "User's Name",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
