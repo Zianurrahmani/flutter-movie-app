@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/provider/movie_discover_provider.dart';
+import 'package:movie_app/widgets/drawer.dart';
+import 'package:movie_app/widgets/image.dart';
+import 'package:provider/provider.dart';
+
+class NowPlayingPage extends StatefulWidget {
+  const NowPlayingPage({super.key});
+
+  @override
+  State<NowPlayingPage> createState() => _NowPlayingPageState();
+}
+
+class _NowPlayingPageState extends State<NowPlayingPage> {
+  final PagingController<int, MovieModel> _pagingController =
+      PagingController(firstPageKey: 1);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      context.read<MovieDiscoverProvider>().getDiscoverWithPagination(context,
+          pagingController: _pagingController, page: pageKey);
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaqueryHeight = MediaQuery.of(context).size.height;
+    final myAppBar = AppBar(title: const Text("Now Playing"));
+    final bodyHeight = mediaqueryHeight -
+        myAppBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+    final bodyWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: myAppBar,
+      drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: PagedListView.separated(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<MovieModel>(
+              itemBuilder: (context, item, index) {
+            return Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+              height: bodyHeight * 0.2,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  ImageWidget(
+                    imageSrc: '${item.posterPath}',
+                    height: double.infinity,
+                    width: 100,
+                    radius: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Icon(
+                              Icons.star_rounded,
+                              color: Colors.amber,
+                              size: 16,
+                            ),
+                            Text('${item.voteAverage}'),
+                            Text(
+                              item.title,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 70,
+                          width: 250,
+                          child: Text(
+                            item.overview,
+                            maxLines: 4,
+                            style: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 250,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Vote: ${item.popularity}"),
+                              const TextButton(
+                                  onPressed: null, child: Text("Detail"))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 10,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
+  }
+}

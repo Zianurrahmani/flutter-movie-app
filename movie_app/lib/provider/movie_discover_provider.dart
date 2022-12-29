@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:movie_app/linking/movie_linking.dart';
 import 'package:movie_app/models/movie_model.dart';
 
@@ -31,6 +31,25 @@ class MovieDiscoverProvider with ChangeNotifier {
       _movies.addAll(response.results);
       _isLoading = false;
       notifyListeners();
+      return null;
+    });
+  }
+
+  void getDiscoverWithPagination(BuildContext context,
+      {required PagingController pagingController, required int page}) async {
+    final result = await _movieLinking.getDiscover(page: page);
+
+    result.fold((errorMessage) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(errorMessage)));
+      return;
+    }, (response) {
+      if (response.results.length < 20) {
+        pagingController.appendLastPage(response.results);
+      } else {
+        pagingController.appendPage(response.results, page + 1);
+      }
+      return null;
     });
   }
 }

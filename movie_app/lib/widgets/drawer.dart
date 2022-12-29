@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/about_page.dart';
 import '../pages/dashboard_page.dart';
-import '../pages/newplaying_page.dart';
+import '../pages/nowplaying_page.dart';
 import '../pages/toprated_page.dart';
 import '../pages/upcoming_page.dart';
 
@@ -79,7 +79,7 @@ class DrawerContent extends StatelessWidget {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: ((context) => const NewPlayingPage())));
+                            builder: ((context) => const NowPlayingPage())));
                   },
                   leading: const Icon(
                     Icons.play_circle_outlined,

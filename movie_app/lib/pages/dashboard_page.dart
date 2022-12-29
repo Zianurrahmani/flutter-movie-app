@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/pages/nowplaying_page.dart';
 import 'package:movie_app/provider/movie_discover_provider.dart';
 import 'package:movie_app/widgets/drawer.dart';
-import 'package:movie_app/widgets/image.dart';
 import 'package:movie_app/widgets/items.dart';
 import 'package:provider/provider.dart';
 
@@ -29,15 +28,21 @@ class DashboardPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Now Playing",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                        onPressed: null,
-                        child: Text(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const NowPlayingPage(),
+                              ));
+                        },
+                        child: const Text(
                           "MORE",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
@@ -86,7 +91,10 @@ class _WidgetDiscoverMovieState extends State<WidgetDiscoverMovie> {
                 itemCount: provider.movies.length,
                 itemBuilder: (_, index, __) {
                   final movie = provider.movies[index];
-                  return ItemMovie(movie);
+                  return ItemMovie(
+                      movie: movie,
+                      widthBackdrop: double.infinity,
+                      heightBackdrop: 200);
                 },
                 options: CarouselOptions(
                   height: 200,

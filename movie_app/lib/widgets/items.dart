@@ -5,8 +5,14 @@ import '../models/movie_model.dart';
 
 class ItemMovie extends Container {
   final MovieModel movie;
+  final double widthBackdrop;
+  final double heightBackdrop;
 
-  ItemMovie(this.movie, {super.key});
+  ItemMovie(
+      {required this.movie,
+      required this.widthBackdrop,
+      required this.heightBackdrop,
+      super.key});
 
   @override
   Clip get clipBehavior => Clip.hardEdge;
@@ -19,17 +25,17 @@ class ItemMovie extends Container {
   Widget? get child => Stack(
         children: [
           SizedBox(
-            height: 200,
+            height: heightBackdrop,
             // padding: EdgeInsets.only(top: 10),
             child: ImageWidget(
               imageSrc: '${movie.backdropPath}',
-              height: 200,
-              width: double.infinity,
+              height: heightBackdrop,
+              width: widthBackdrop,
             ),
           ),
           Container(
             // height: 200,
-            width: double.infinity,
+            width: widthBackdrop,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
