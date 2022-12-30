@@ -111,4 +111,29 @@ class MovieLingkingImpl implements MovieLinking {
       return const Left('Internal Server Error');
     }
   }
+
+  @override
+  Future<Either<String, MovieResponseModel>> search({
+    required String query,
+  }) async {
+    try {
+      final result = await _dio.get(
+        '/search/movie',
+        queryParameters: {"query": query},
+      );
+
+      if (result.statusCode == 200 && result.data != null) {
+        final model = MovieResponseModel.fromJson(result.data);
+        return Right(model);
+      }
+
+      return const Left('Error search movie');
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return Left(e.response.toString());
+      }
+
+      return const Left('Another error on search movie');
+    }
+  }
 }

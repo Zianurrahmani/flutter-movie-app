@@ -73,7 +73,7 @@ class MovieDetailPage extends StatelessWidget {
                                       child: Text(
                                         movie.tagline,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -180,17 +180,17 @@ class MovieDetailPage extends StatelessWidget {
                             return const SliverToBoxAdapter();
                           },
                         ),
-                        SubTitleWidget(title: "Descroption"),
+                        const SubTitleWidget(title: "Descroption"),
                         SliverToBoxAdapter(
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             // height: bodyHeight * 0.4,
                             // width: bodyWidth,
                             // color: Colors.amber,
                             child: Text(movie.overview),
                           ),
                         ),
-                        SubTitleWidget(title: "Genres"),
+                        const SubTitleWidget(title: "Genres"),
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),

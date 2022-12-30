@@ -5,6 +5,7 @@ import 'package:movie_app/pages/dashboard_page.dart';
 import 'package:movie_app/provider/movie_nowplaying_provider.dart';
 import 'package:movie_app/provider/movie_toprated_provider.dart';
 import 'package:movie_app/provider/movie_upcoming_provider.dart';
+import 'package:movie_app/provider/movie_search_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => getIt<MovieUpcomingProvider>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => getIt<MovieSearchProvider>(),
         ),
       ],
       child: const MaterialApp(

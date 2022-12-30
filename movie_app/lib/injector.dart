@@ -5,6 +5,7 @@ import 'package:movie_app/linking/movie_linking.dart';
 import 'package:movie_app/linking/movie_linking_impl.dart';
 import 'package:movie_app/provider/movie_detail_provider.dart';
 import 'package:movie_app/provider/movie_nowplaying_provider.dart';
+import 'package:movie_app/provider/movie_search_provider.dart';
 import 'package:movie_app/provider/movie_toprated_provider.dart';
 import 'package:movie_app/provider/movie_upcoming_provider.dart';
 import 'package:movie_app/provider/movie_video_provider.dart';
@@ -26,6 +27,9 @@ void setup() {
   );
   getIt.registerFactory<MovieVideosProvider>(
     () => MovieVideosProvider(getIt()),
+  );
+  getIt.registerFactory<MovieSearchProvider>(
+    () => MovieSearchProvider(getIt()),
   );
 
   getIt.registerLazySingleton<MovieLinking>(() => MovieLingkingImpl(getIt()));

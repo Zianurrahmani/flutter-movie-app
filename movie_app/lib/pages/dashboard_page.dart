@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/pages/nowplaying_page.dart';
+import 'package:movie_app/pages/search_page.dart';
 import 'package:movie_app/pages/toprated_page.dart';
 import 'package:movie_app/pages/upcoming_page.dart';
 import 'package:movie_app/widgets/drawer.dart';
@@ -24,10 +25,19 @@ class DashboardPage extends StatelessWidget {
         drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
         body: CustomScrollView(
           slivers: [
-            const SliverAppBar(
-              title: Text("Home"),
+            SliverAppBar(
+              title: const Text("Home"),
               floating: true,
               snap: true,
+              actions: [
+                IconButton(
+                  onPressed: () => showSearch(
+                    context: context,
+                    delegate: MovieSearchPage(),
+                  ),
+                  icon: const Icon(Icons.search),
+                ),
+              ],
             ),
             SliverTitle(
               title: 'Now Playing',

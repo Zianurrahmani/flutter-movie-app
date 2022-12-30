@@ -112,7 +112,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                                     ),
                                   );
                                 },
-                                child: Text("Detail"),
+                                child: const Text("Detail"),
                               ),
                             ],
                           ),

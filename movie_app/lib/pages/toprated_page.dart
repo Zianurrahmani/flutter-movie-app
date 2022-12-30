@@ -112,7 +112,7 @@ class _TopRatedPageState extends State<TopRatedPage> {
                                     ),
                                   );
                                 },
-                                child: Text("Detail"),
+                                child: const Text("Detail"),
                               ),
                             ],
                           ),

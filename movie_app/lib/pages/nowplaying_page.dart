@@ -113,7 +113,7 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
                                     ),
                                   );
                                 },
-                                child: Text("Detail"),
+                                child: const Text("Detail"),
                               ),
                             ],
                           ),
