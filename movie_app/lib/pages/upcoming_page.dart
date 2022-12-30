@@ -29,7 +29,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
   @override
   Widget build(BuildContext context) {
     final mediaqueryHeight = MediaQuery.of(context).size.height;
-    final myAppBar = AppBar(title: const Text("Now Playing"));
+    final myAppBar = AppBar(title: const Text("Upcoming Movies"));
     final bodyHeight = mediaqueryHeight -
         myAppBar.preferredSize.height -
         MediaQuery.of(context).padding.top;

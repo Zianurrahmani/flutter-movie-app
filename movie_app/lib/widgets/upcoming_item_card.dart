@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/app_credentials.dart';
+import 'package:movie_app/pages/movie_detail_page.dart';
 import 'package:movie_app/provider/movie_upcoming_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,13 +45,29 @@ class _WidgetUpcomingMovieState extends State<WidgetUpcomingMovie> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            '${AppCredentials.baseImageUrl}${provider.movies[index].posterPath}',
-                            height: 180,
-                            width: 100,
-                            fit: BoxFit.fill,
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                '${AppCredentials.baseImageUrl}${provider.movies[index].posterPath}',
+                                height: 180,
+                                width: 100,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MovieDetailPage(
+                                        id: provider.movies[index].id);
+                                  },
+                                ),
+                              );
+                            },
                           ),
                         ),
                         SizedBox(

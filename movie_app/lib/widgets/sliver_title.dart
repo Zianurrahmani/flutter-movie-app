@@ -20,7 +20,7 @@ class SliverTitle extends SliverToBoxAdapter {
                 onPressed: onPressed,
                 child: const Text(
                   "MORE",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ))
           ],
         ),

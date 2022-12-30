@@ -24,7 +24,11 @@ class DashboardPage extends StatelessWidget {
         drawer: DrawerContent(bodyWidth: bodyWidth, bodyHeight: bodyHeight),
         body: CustomScrollView(
           slivers: [
-            const SliverAppBar(title: Text("Home")),
+            const SliverAppBar(
+              title: Text("Home"),
+              floating: true,
+              snap: true,
+            ),
             SliverTitle(
               title: 'Now Playing',
               onPressed: () {

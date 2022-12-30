@@ -7,11 +7,13 @@ class ItemMovie extends Container {
   final MovieModel movie;
   final double widthBackdrop;
   final double heightBackdrop;
+  final void Function()? onTap;
 
   ItemMovie(
       {required this.movie,
       required this.widthBackdrop,
       required this.heightBackdrop,
+      this.onTap,
       super.key});
 
   @override
@@ -43,33 +45,47 @@ class ItemMovie extends Container {
                     colors: [Colors.transparent, Colors.black87])),
           ),
           Positioned(
-              bottom: 10,
-              left: 15,
-              right: 15,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    movie.title,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star_rounded,
-                        color: Colors.amber,
-                        size: 16,
-                      ),
-                      Text(
-                        '${movie.voteAverage}',
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
-              ))
+            bottom: 10,
+            left: 15,
+            right: 15,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  movie.title,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_rounded,
+                      color: Colors.amber,
+                      size: 16,
+                    ),
+                    Text(
+                      '${movie.voteAverage}',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   '${movie.releaseDate}',
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+              ),
+            ),
+          )
         ],
       );
 }

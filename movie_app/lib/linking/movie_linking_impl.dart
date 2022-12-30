@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:movie_app/models/movie_detail_model.dart';
 import 'package:movie_app/models/movie_model.dart';
 import 'movie_linking.dart';
 
@@ -19,7 +20,7 @@ class MovieLingkingImpl implements MovieLinking {
         return Right(model);
       }
 
-      return const Left('Error get dicover');
+      return const Left('Error get Now Playing');
     } on DioError catch (e) {
       if (e.response != null) {
         return Left(e.response.toString());
@@ -39,7 +40,7 @@ class MovieLingkingImpl implements MovieLinking {
         return Right(model);
       }
 
-      return const Left('Error get dicover');
+      return const Left('Error get Top Rated');
     } on DioError catch (e) {
       if (e.response != null) {
         return Left(e.response.toString());
@@ -59,7 +60,27 @@ class MovieLingkingImpl implements MovieLinking {
         return Right(model);
       }
 
-      return const Left('Error get dicover');
+      return const Left('Error get Upcoming');
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return Left(e.response.toString());
+      }
+      return const Left('Internal Server Error');
+    }
+  }
+
+  @override
+  Future<Either<String, MovieDetailResponse>> getDetail(
+      {required int id}) async {
+    try {
+      final result = await _dio.get('/movie/$id');
+
+      if (result.statusCode == 200 && result.data != null) {
+        final model = MovieDetailResponse.fromJson(result.data);
+        return Right(model);
+      }
+
+      return const Left('Error get Detail');
     } on DioError catch (e) {
       if (e.response != null) {
         return Left(e.response.toString());
