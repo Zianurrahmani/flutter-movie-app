@@ -1,24 +1,16 @@
-import 'dart:convert';
-
-MovieDetailResponse movieDetailResponseFromJson(String str) =>
-    MovieDetailResponse.fromJson(json.decode(str));
-
-String movieDetailResponseToJson(MovieDetailResponse data) =>
-    json.encode(data.toJson());
-
 class MovieDetailResponse {
   MovieDetailResponse({
     required this.adult,
-    this.backdropPath,
+    required this.backdropPath,
     required this.budget,
     required this.genres,
     this.homepage,
     required this.id,
     required this.originalLanguage,
     required this.originalTitle,
-    this.overview,
+    required this.overview,
     required this.popularity,
-    this.posterPath,
+    required this.posterPath,
     required this.releaseDate,
     required this.revenue,
     required this.status,
@@ -29,16 +21,16 @@ class MovieDetailResponse {
   });
 
   bool adult;
-  String? backdropPath;
+  String backdropPath;
   int budget;
   List<Genre> genres;
   String? homepage;
   int id;
   String originalLanguage;
   String originalTitle;
-  String? overview;
+  String overview;
   double popularity;
-  String? posterPath;
+  String posterPath;
   DateTime releaseDate;
   int revenue;
   String status;
@@ -68,28 +60,6 @@ class MovieDetailResponse {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "adult": adult,
-        "backdrop_path": backdropPath,
-        "budget": budget,
-        "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
-        "homepage": homepage,
-        "id": id,
-        "original_language": originalLanguage,
-        "original_title": originalTitle,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "release_date":
-            "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-        "revenue": revenue,
-        "status": status,
-        "tagline": tagline,
-        "title": title,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
 }
 
 class Genre {
@@ -105,9 +75,4 @@ class Genre {
         id: json["id"],
         name: json["name"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
 }

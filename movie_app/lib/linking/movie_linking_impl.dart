@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_app/models/movie_detail_model.dart';
 import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/movie_video_model.dart';
 import 'movie_linking.dart';
 
 class MovieLingkingImpl implements MovieLinking {
@@ -85,6 +86,28 @@ class MovieLingkingImpl implements MovieLinking {
       if (e.response != null) {
         return Left(e.response.toString());
       }
+      return const Left('Internal Server Error');
+    }
+  }
+
+  @override
+  Future<Either<String, MovieVideosModel>> getVideos({required int id}) async {
+    try {
+      final result = await _dio.get(
+        '/movie/$id/videos',
+      );
+
+      if (result.statusCode == 200 && result.data != null) {
+        final model = MovieVideosModel.fromJson(result.data);
+        return Right(model);
+      }
+
+      return const Left('Error get movie videos');
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return Left(e.response.toString());
+      }
+
       return const Left('Internal Server Error');
     }
   }

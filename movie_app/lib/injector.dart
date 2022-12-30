@@ -7,6 +7,7 @@ import 'package:movie_app/provider/movie_detail_provider.dart';
 import 'package:movie_app/provider/movie_nowplaying_provider.dart';
 import 'package:movie_app/provider/movie_toprated_provider.dart';
 import 'package:movie_app/provider/movie_upcoming_provider.dart';
+import 'package:movie_app/provider/movie_video_provider.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,6 +23,9 @@ void setup() {
   );
   getIt.registerFactory<MovieDetailProvider>(
     () => MovieDetailProvider(getIt()),
+  );
+  getIt.registerFactory<MovieVideosProvider>(
+    () => MovieVideosProvider(getIt()),
   );
 
   getIt.registerLazySingleton<MovieLinking>(() => MovieLingkingImpl(getIt()));

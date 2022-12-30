@@ -1,11 +1,3 @@
-import 'dart:convert';
-
-MovieResponseModel movieResponseModelFromJson(String str) =>
-    MovieResponseModel.fromJson(json.decode(str));
-
-String movieResponseModelToJson(MovieResponseModel data) =>
-    json.encode(data.toJson());
-
 class MovieResponseModel {
   MovieResponseModel({
     required this.page,
@@ -27,13 +19,6 @@ class MovieResponseModel {
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "page": page,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-        "total_pages": totalPages,
-        "total_results": totalResults,
-      };
 }
 
 class MovieModel {
@@ -79,20 +64,4 @@ class MovieModel {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "backdrop_path": backdropPath,
-        "id": id,
-        "original_title": originalTitle,
-        "overview": overview,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "release_date":
-            "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-        "title": title,
-        "video": video,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
 }

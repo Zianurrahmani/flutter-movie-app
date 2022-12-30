@@ -68,11 +68,6 @@ class ItemMovie extends Container {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   '${movie.releaseDate}',
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ],
                 ),
               ],

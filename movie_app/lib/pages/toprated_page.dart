@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/pages/movie_detail_page.dart';
 import 'package:movie_app/provider/movie_toprated_provider.dart';
 import 'package:movie_app/widgets/drawer.dart';
 import 'package:movie_app/widgets/image.dart';
@@ -100,8 +101,19 @@ class _TopRatedPageState extends State<TopRatedPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Vote: ${item.popularity}"),
-                              const TextButton(
-                                  onPressed: null, child: Text("Detail"))
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return MovieDetailPage(id: item.id);
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("Detail"),
+                              ),
                             ],
                           ),
                         )
